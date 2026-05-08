@@ -24,9 +24,19 @@ body {
 }
 
 .admin {
-  max-width: 960px;
+  max-width: 920px;
   margin: 0 auto;
-  padding: 1.5rem;
+  padding: 1.5rem 1.25rem 3rem;
+}
+
+.admin__header {
+  margin-bottom: 0.25rem;
+}
+
+.inline-code {
+  font-family: ui-monospace, "Cascadia Code", monospace;
+  font-size: 0.88em;
+  color: var(--adm-accent);
 }
 
 .admin h1 {
@@ -112,6 +122,23 @@ body {
   color: var(--adm-bg);
 }
 
+.btn--small {
+  padding: 0.35rem 0.65rem;
+  font-size: 0.8rem;
+  margin-top: 0.5rem;
+}
+
+.btn--ghost {
+  background: transparent;
+  border-style: dashed;
+  width: 100%;
+  margin-top: 0.75rem;
+}
+
+.btn--ghost:hover {
+  border-style: solid;
+}
+
 .status {
   padding: 0.65rem 0.85rem;
   border-radius: 8px;
@@ -129,18 +156,207 @@ body {
   border: 1px solid rgba(248, 113, 113, 0.35);
 }
 
-#json-editor {
-  width: 100%;
-  min-height: 70vh;
-  padding: 1rem;
-  font-family: ui-monospace, "Cascadia Code", monospace;
+.admin-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 1.25rem 0 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--adm-border);
+}
+
+.admin-tab {
+  padding: 0.45rem 0.75rem;
+  font-size: 0.78rem;
+  border-radius: 999px;
+  border: 1px solid var(--adm-border);
+  background: var(--adm-panel);
+  color: var(--adm-muted);
+  cursor: pointer;
+}
+
+.admin-tab:hover {
+  color: var(--adm-text);
+  border-color: rgba(201, 164, 106, 0.45);
+}
+
+.admin-tab[aria-selected="true"] {
+  color: var(--adm-bg);
+  background: linear-gradient(135deg, var(--adm-accent), #a88454);
+  border-color: transparent;
+  font-weight: 600;
+}
+
+.admin-panel {
+  animation: panel-in 0.2s ease;
+}
+
+@keyframes panel-in {
+  from {
+    opacity: 0.85;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.form-card {
+  background: var(--adm-panel);
+  border: 1px solid var(--adm-border);
+  border-radius: 12px;
+  padding: 1.25rem 1.35rem;
+  margin-bottom: 1.25rem;
+}
+
+.form-card__title {
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin: 0 0 0.35rem;
+}
+
+.form-card__subtitle {
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin: 1.25rem 0 0.5rem;
+  color: var(--adm-muted);
+}
+
+.form-hint {
   font-size: 0.8rem;
+  color: var(--adm-muted);
+  margin: 0 0 1rem;
   line-height: 1.45;
+}
+
+.f-label {
+  display: block;
+  font-size: 0.78rem;
+  color: var(--adm-muted);
+  margin: 0.85rem 0 0.35rem;
+}
+
+.f-label:first-of-type {
+  margin-top: 0;
+}
+
+.f-input {
+  width: 100%;
+  padding: 0.55rem 0.65rem;
   border-radius: 8px;
   border: 1px solid var(--adm-border);
   background: #0a0a0f;
   color: var(--adm-text);
+  font-size: 0.9rem;
+  font-family: inherit;
+}
+
+.f-input:focus {
+  outline: none;
+  border-color: rgba(201, 164, 106, 0.55);
+  box-shadow: 0 0 0 2px rgba(201, 164, 106, 0.12);
+}
+
+.f-input--mono {
+  font-family: ui-monospace, "Cascadia Code", monospace;
+  font-size: 0.78rem;
+  line-height: 1.45;
+  min-height: 50vh;
   resize: vertical;
+}
+
+.f-check {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  margin: 1rem 0 0;
+  font-size: 0.88rem;
+  cursor: pointer;
+}
+
+.f-check input {
+  margin-top: 0.2rem;
+  accent-color: var(--adm-accent);
+}
+
+.f-row2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  margin-top: 0.35rem;
+}
+
+@media (max-width: 640px) {
+  .f-row2 {
+    grid-template-columns: 1fr;
+  }
+}
+
+.f-num-block {
+  display: flex;
+  gap: 0.85rem;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--adm-border);
+}
+
+.f-num-block:first-of-type {
+  border-top: none;
+  padding-top: 0;
+}
+
+.f-num {
+  flex-shrink: 0;
+  width: 1.75rem;
+  height: 1.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  background: rgba(201, 164, 106, 0.15);
+  color: var(--adm-accent);
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.f-num + div {
+  flex: 1;
+  min-width: 0;
+}
+
+.dynamic-row {
+  padding: 1rem;
+  margin-bottom: 0.75rem;
+  border-radius: 10px;
+  border: 1px solid var(--adm-border);
+  background: #0a0a0f;
+}
+
+.video-fieldset {
+  border: 1px dashed var(--adm-border);
+  border-radius: 10px;
+  padding: 1rem 1rem 0.5rem;
+  margin: 0 0 1rem;
+}
+
+.video-fieldset legend {
+  padding: 0 0.5rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--adm-muted);
+}
+
+.video-fieldset--accent {
+  border-color: rgba(201, 164, 106, 0.35);
+}
+
+.toolbar--panel {
+  margin-top: 1rem;
+  margin-bottom: 0;
+}
+
+#json-editor {
+  width: 100%;
+  min-height: 40vh;
 }
 
 .admin__help {
@@ -158,7 +374,16 @@ body {
 }
 
 @media (max-width: 640px) {
-  #json-editor {
-    min-height: 50vh;
+  .admin-tabs {
+    gap: 0.35rem;
+  }
+
+  .admin-tab {
+    font-size: 0.72rem;
+    padding: 0.4rem 0.55rem;
+  }
+
+  .f-input--mono {
+    min-height: 40vh;
   }
 }

@@ -11,7 +11,7 @@
     <!-- Set ORACLE_ADMIN_PIN in the script below before going live. -->
     <div id="gate" class="gate">
       <h1 style="margin-top: 0">Admin</h1>
-      <p class="admin__sub">Enter PIN to edit site content.</p>
+      <p class="admin__sub">Enter your PIN to edit the site in plain language — no code required.</p>
       <label for="pin-input">PIN</label>
       <input id="pin-input" type="password" autocomplete="current-password" />
       <p id="gate-err" class="gate__err" role="alert"></p>
@@ -21,44 +21,491 @@
     </div>
 
     <div id="app" class="admin" hidden>
-      <h1>Site editor</h1>
-      <p class="admin__sub">
-        Edit <code>assets/data/site.json</code> structure below. Save to this browser for instant
-        preview, or download the file and replace it in your project for production.
-      </p>
+      <header class="admin__header">
+        <h1>Site editor</h1>
+        <p class="admin__sub">
+          Change text and links here. Use <strong>Save to this browser</strong> to preview on the public
+          page, or <strong>Download</strong> to replace <code class="inline-code">assets/data/site.json</code>
+          before you publish.
+        </p>
+      </header>
+
       <div id="status" class="status" hidden role="status"></div>
+
       <div class="toolbar">
         <button type="button" class="btn" id="btn-reload">Reload from file</button>
         <button type="button" class="btn btn--primary" id="btn-save-browser">Save to browser</button>
-        <button type="button" class="btn" id="btn-clear-browser">Clear browser data</button>
+        <button type="button" class="btn" id="btn-clear-browser">Clear browser draft</button>
         <button type="button" class="btn" id="btn-download">Download site.json</button>
         <button type="button" class="btn" id="btn-import">Import JSON file…</button>
         <a class="btn" href="index.html" target="_blank" rel="noopener">Open public site</a>
         <button type="button" class="btn" id="btn-logout">Lock</button>
       </div>
+
       <input type="file" id="import-file" accept=".json,application/json" hidden />
-      <textarea id="json-editor" spellcheck="false" aria-label="Site JSON"></textarea>
-      <div class="admin__help">
-        <p><strong>Key sections</strong></p>
-        <ul>
-          <li><code>hero</code> — headline, quote, CTA labels, <code>heroImage</code> path</li>
-          <li><code>valueStrip.items</code> — 3 short blocks (low cognitive load)</li>
-          <li><code>services.items</code>, <code>approach</code>, <code>process.steps</code></li>
-          <li><code>testimonials.items</code> — reviews (quote + cite)</li>
-          <li><code>events.items</code> — title, date, location, role, optional <code>url</code></li>
-          <li><code>portfolio.images</code> — array of image paths/URLs</li>
-          <li><code>videos</code> — <code>v1</code>…<code>v4</code>, <code>mv1</code> with <code>url</code> &amp; <code>poster</code></li>
-          <li><code>faq.items</code>, <code>contact</code>, <code>offerBanner.enabled</code></li>
-          <li><code>meta</code> — SEO title &amp; descriptions</li>
-        </ul>
-        <p>
-          <strong>Production:</strong> after Download, save as
-          <code>assets/data/site.json</code> in your project and deploy.
-        </p>
+
+      <nav class="admin-tabs" role="tablist" aria-label="Editor sections">
+        <button type="button" class="admin-tab" role="tab" aria-selected="true" data-tab="intro">
+          Home &amp; hero
+        </button>
+        <button type="button" class="admin-tab" role="tab" aria-selected="false" data-tab="offer">
+          Services &amp; process
+        </button>
+        <button type="button" class="admin-tab" role="tab" aria-selected="false" data-tab="people">
+          Reviews &amp; about
+        </button>
+        <button type="button" class="admin-tab" role="tab" aria-selected="false" data-tab="media">
+          Video
+        </button>
+        <button type="button" class="admin-tab" role="tab" aria-selected="false" data-tab="events">
+          Events &amp; FAQ
+        </button>
+        <button type="button" class="admin-tab" role="tab" aria-selected="false" data-tab="contact">
+          Contact &amp; banner
+        </button>
+        <button type="button" class="admin-tab" role="tab" aria-selected="false" data-tab="search">
+          Google &amp; sharing
+        </button>
+        <button type="button" class="admin-tab" role="tab" aria-selected="false" data-tab="json">
+          Advanced (JSON)
+        </button>
+      </nav>
+
+      <!-- Intro -->
+      <div id="panel-intro" class="admin-panel" role="tabpanel">
+        <div class="form-card">
+          <h2 class="form-card__title">Brand</h2>
+          <p class="form-hint">Shown in the header and footer.</p>
+          <label class="f-label" for="brand-name">Your name</label>
+          <input class="f-input" id="brand-name" type="text" autocomplete="organization" />
+
+          <label class="f-label" for="brand-tag">Tagline (e.g. Oracle of Freedom)</label>
+          <input class="f-input" id="brand-tag" type="text" />
+        </div>
+
+        <div class="form-card">
+          <h2 class="form-card__title">Hero — main headline</h2>
+          <p class="form-hint">The first text visitors see.</p>
+          <label class="f-label" for="hero-headline">Main headline</label>
+          <input class="f-input" id="hero-headline" type="text" />
+
+          <label class="f-label" for="hero-headline-short">Shorter headline (optional)</label>
+          <input class="f-input" id="hero-headline-short" type="text" />
+
+          <label class="f-check">
+            <input id="hero-use-short" type="checkbox" />
+            Use the shorter headline on the site
+          </label>
+
+          <label class="f-label" for="hero-quote">Supporting quote</label>
+          <textarea class="f-input" id="hero-quote" rows="4"></textarea>
+
+          <div class="f-row2">
+            <div>
+              <label class="f-label" for="hero-role">Role line (e.g. Photographer)</label>
+              <input class="f-input" id="hero-role" type="text" />
+            </div>
+            <div>
+              <label class="f-label" for="hero-year">Year</label>
+              <input class="f-input" id="hero-year" type="text" />
+            </div>
+          </div>
+
+          <div class="f-row2">
+            <div>
+              <label class="f-label" for="hero-insta-url">Instagram link</label>
+              <input class="f-input" id="hero-insta-url" type="url" placeholder="https://instagram.com/…" />
+            </div>
+            <div>
+              <label class="f-label" for="hero-insta-label">Instagram handle (display)</label>
+              <input class="f-input" id="hero-insta-label" type="text" placeholder="@you" />
+            </div>
+          </div>
+
+          <div class="f-row2">
+            <div>
+              <label class="f-label" for="hero-cta1">Primary button text</label>
+              <input class="f-input" id="hero-cta1" type="text" />
+            </div>
+            <div>
+              <label class="f-label" for="hero-cta2">Secondary button text</label>
+              <input class="f-input" id="hero-cta2" type="text" />
+            </div>
+          </div>
+
+          <label class="f-label" for="hero-image">Hero image (path or URL, optional)</label>
+          <input class="f-input" id="hero-image" type="text" placeholder="assets/img/…" />
+        </div>
+
+        <div class="form-card">
+          <h2 class="form-card__title">Quick proof strip</h2>
+          <p class="form-hint">Four short labels under the hero (e.g. Festivals, Events).</p>
+          <div class="f-row2">
+            <div><label class="f-label" for="proof-0">Label 1</label><input class="f-input" id="proof-0" type="text" /></div>
+            <div><label class="f-label" for="proof-1">Label 2</label><input class="f-input" id="proof-1" type="text" /></div>
+          </div>
+          <div class="f-row2">
+            <div><label class="f-label" for="proof-2">Label 3</label><input class="f-input" id="proof-2" type="text" /></div>
+            <div><label class="f-label" for="proof-3">Label 4</label><input class="f-input" id="proof-3" type="text" /></div>
+          </div>
+        </div>
+
+        <div class="form-card">
+          <h2 class="form-card__title">Value strip — three promises</h2>
+          <p class="form-hint">Short blocks that build trust above the fold.</p>
+          <div class="f-num-block">
+            <span class="f-num">1</span>
+            <div>
+              <label class="f-label" for="vs-0-title">Title</label>
+              <input class="f-input" id="vs-0-title" type="text" />
+              <label class="f-label" for="vs-0-text">Text</label>
+              <textarea class="f-input" id="vs-0-text" rows="2"></textarea>
+            </div>
+          </div>
+          <div class="f-num-block">
+            <span class="f-num">2</span>
+            <div>
+              <label class="f-label" for="vs-1-title">Title</label>
+              <input class="f-input" id="vs-1-title" type="text" />
+              <label class="f-label" for="vs-1-text">Text</label>
+              <textarea class="f-input" id="vs-1-text" rows="2"></textarea>
+            </div>
+          </div>
+          <div class="f-num-block">
+            <span class="f-num">3</span>
+            <div>
+              <label class="f-label" for="vs-2-title">Title</label>
+              <input class="f-input" id="vs-2-title" type="text" />
+              <label class="f-label" for="vs-2-text">Text</label>
+              <textarea class="f-input" id="vs-2-text" rows="2"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Offer -->
+      <div id="panel-offer" class="admin-panel" role="tabpanel" hidden>
+        <div class="form-card">
+          <h2 class="form-card__title">Services block</h2>
+          <label class="f-label" for="svc-title">Section title</label>
+          <input class="f-input" id="svc-title" type="text" />
+          <label class="f-label" for="svc-lead">Introduction</label>
+          <textarea class="f-input" id="svc-lead" rows="3"></textarea>
+          <label class="f-label" for="svc-0-title">Service A — title</label>
+          <input class="f-input" id="svc-0-title" type="text" />
+          <label class="f-label" for="svc-0-body">Service A — description</label>
+          <textarea class="f-input" id="svc-0-body" rows="3"></textarea>
+          <label class="f-label" for="svc-1-title">Service B — title</label>
+          <input class="f-input" id="svc-1-title" type="text" />
+          <label class="f-label" for="svc-1-body">Service B — description</label>
+          <textarea class="f-input" id="svc-1-body" rows="3"></textarea>
+        </div>
+
+        <div class="form-card">
+          <h2 class="form-card__title">Tailored to you (approach)</h2>
+          <label class="f-label" for="app-title">Title</label>
+          <input class="f-input" id="app-title" type="text" />
+          <label class="f-label" for="app-lead">Lead paragraph</label>
+          <textarea class="f-input" id="app-lead" rows="3"></textarea>
+          <label class="f-label" for="app-body">Main text</label>
+          <textarea class="f-input" id="app-body" rows="4"></textarea>
+          <label class="f-label" for="app-list-title">Bullets heading</label>
+          <input class="f-input" id="app-list-title" type="text" />
+          <label class="f-label" for="app-bullets">Bullet points (one per line)</label>
+          <textarea class="f-input" id="app-bullets" rows="6"></textarea>
+          <label class="f-label" for="app-note">Closing note</label>
+          <textarea class="f-input" id="app-note" rows="2"></textarea>
+          <div class="f-row2">
+            <div>
+              <label class="f-label" for="app-cta1">Button 1</label>
+              <input class="f-input" id="app-cta1" type="text" />
+            </div>
+            <div>
+              <label class="f-label" for="app-cta2">Button 2</label>
+              <input class="f-input" id="app-cta2" type="text" />
+            </div>
+          </div>
+        </div>
+
+        <div class="form-card">
+          <h2 class="form-card__title">Process — four steps</h2>
+          <label class="f-label" for="proc-title">Section title</label>
+          <input class="f-input" id="proc-title" type="text" />
+          <label class="f-label" for="proc-lead">Introduction</label>
+          <textarea class="f-input" id="proc-lead" rows="2"></textarea>
+          <div class="f-num-block">
+            <span class="f-num">1</span>
+            <div>
+              <label class="f-label" for="proc-0-title">Step title</label>
+              <input class="f-input" id="proc-0-title" type="text" />
+              <label class="f-label" for="proc-0-body">Step text</label>
+              <textarea class="f-input" id="proc-0-body" rows="2"></textarea>
+            </div>
+          </div>
+          <div class="f-num-block">
+            <span class="f-num">2</span>
+            <div>
+              <label class="f-label" for="proc-1-title">Step title</label>
+              <input class="f-input" id="proc-1-title" type="text" />
+              <label class="f-label" for="proc-1-body">Step text</label>
+              <textarea class="f-input" id="proc-1-body" rows="2"></textarea>
+            </div>
+          </div>
+          <div class="f-num-block">
+            <span class="f-num">3</span>
+            <div>
+              <label class="f-label" for="proc-2-title">Step title</label>
+              <input class="f-input" id="proc-2-title" type="text" />
+              <label class="f-label" for="proc-2-body">Step text</label>
+              <textarea class="f-input" id="proc-2-body" rows="2"></textarea>
+            </div>
+          </div>
+          <div class="f-num-block">
+            <span class="f-num">4</span>
+            <div>
+              <label class="f-label" for="proc-3-title">Step title</label>
+              <input class="f-input" id="proc-3-title" type="text" />
+              <label class="f-label" for="proc-3-body">Step text</label>
+              <textarea class="f-input" id="proc-3-body" rows="2"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- People -->
+      <div id="panel-people" class="admin-panel" role="tabpanel" hidden>
+        <div class="form-card">
+          <h2 class="form-card__title">Testimonials</h2>
+          <label class="f-label" for="testi-title">Section title</label>
+          <input class="f-input" id="testi-title" type="text" />
+          <label class="f-label" for="testi-lead">Short intro</label>
+          <input class="f-input" id="testi-lead" type="text" />
+          <div id="testimonials-list"></div>
+          <button type="button" class="btn btn--ghost" id="add-review">+ Add testimonial</button>
+        </div>
+
+        <div class="form-card">
+          <h2 class="form-card__title">About you</h2>
+          <label class="f-label" for="about-title">Title</label>
+          <input class="f-input" id="about-title" type="text" />
+          <label class="f-label" for="about-body">Bio</label>
+          <textarea class="f-input" id="about-body" rows="6"></textarea>
+          <label class="f-label" for="about-chips">Topics / tags (comma-separated)</label>
+          <input class="f-input" id="about-chips" type="text" placeholder="Festivals, Retreats, …" />
+          <label class="f-label" for="about-image">Portrait image (path or URL)</label>
+          <input class="f-input" id="about-image" type="text" />
+          <label class="f-label" for="about-caption">Image caption</label>
+          <input class="f-input" id="about-caption" type="text" />
+        </div>
+
+        <div class="form-card">
+          <h2 class="form-card__title">Portfolio images</h2>
+          <label class="f-label" for="port-title">Section title</label>
+          <input class="f-input" id="port-title" type="text" />
+          <label class="f-label" for="port-lead">Introduction</label>
+          <textarea class="f-input" id="port-lead" rows="2"></textarea>
+          <label class="f-label" for="port-images">Image paths or URLs (one per line)</label>
+          <textarea class="f-input" id="port-images" rows="8" placeholder="assets/img/photo1.jpg"></textarea>
+        </div>
+      </div>
+
+      <!-- Media -->
+      <div id="panel-media" class="admin-panel" role="tabpanel" hidden>
+        <div class="form-card">
+          <h2 class="form-card__title">Videography &amp; music sections</h2>
+          <label class="f-label" for="vid-title">Videography — title</label>
+          <input class="f-input" id="vid-title" type="text" />
+          <label class="f-label" for="vid-lead">Videography — intro</label>
+          <textarea class="f-input" id="vid-lead" rows="2"></textarea>
+          <label class="f-label" for="mv-title">Music videos — title</label>
+          <input class="f-input" id="mv-title" type="text" />
+          <label class="f-label" for="mv-lead">Music videos — intro</label>
+          <textarea class="f-input" id="mv-lead" rows="2"></textarea>
+        </div>
+
+        <div class="form-card">
+          <h2 class="form-card__title">Video links</h2>
+          <p class="form-hint">Paste YouTube or Vimeo URLs. Poster image is optional (thumbnail URL).</p>
+
+          <fieldset class="video-fieldset">
+            <legend>Videography — clip 1</legend>
+            <label class="f-label" for="video-v1-title">Title</label>
+            <input class="f-input" id="video-v1-title" type="text" />
+            <label class="f-label" for="video-v1-url">Video URL</label>
+            <input class="f-input" id="video-v1-url" type="url" />
+            <label class="f-label" for="video-v1-poster">Poster image URL (optional)</label>
+            <input class="f-input" id="video-v1-poster" type="text" />
+          </fieldset>
+          <fieldset class="video-fieldset">
+            <legend>Videography — clip 2</legend>
+            <label class="f-label" for="video-v2-title">Title</label>
+            <input class="f-input" id="video-v2-title" type="text" />
+            <label class="f-label" for="video-v2-url">Video URL</label>
+            <input class="f-input" id="video-v2-url" type="url" />
+            <label class="f-label" for="video-v2-poster">Poster image URL (optional)</label>
+            <input class="f-input" id="video-v2-poster" type="text" />
+          </fieldset>
+          <fieldset class="video-fieldset">
+            <legend>Videography — clip 3</legend>
+            <label class="f-label" for="video-v3-title">Title</label>
+            <input class="f-input" id="video-v3-title" type="text" />
+            <label class="f-label" for="video-v3-url">Video URL</label>
+            <input class="f-input" id="video-v3-url" type="url" />
+            <label class="f-label" for="video-v3-poster">Poster image URL (optional)</label>
+            <input class="f-input" id="video-v3-poster" type="text" />
+          </fieldset>
+          <fieldset class="video-fieldset">
+            <legend>Videography — clip 4</legend>
+            <label class="f-label" for="video-v4-title">Title</label>
+            <input class="f-input" id="video-v4-title" type="text" />
+            <label class="f-label" for="video-v4-url">Video URL</label>
+            <input class="f-input" id="video-v4-url" type="url" />
+            <label class="f-label" for="video-v4-poster">Poster image URL (optional)</label>
+            <input class="f-input" id="video-v4-poster" type="text" />
+          </fieldset>
+          <fieldset class="video-fieldset video-fieldset--accent">
+            <legend>Featured music video</legend>
+            <label class="f-label" for="video-mv1-title">Title</label>
+            <input class="f-input" id="video-mv1-title" type="text" />
+            <label class="f-label" for="video-mv1-url">Video URL</label>
+            <input class="f-input" id="video-mv1-url" type="url" />
+            <label class="f-label" for="video-mv1-poster">Poster image URL (optional)</label>
+            <input class="f-input" id="video-mv1-poster" type="text" />
+          </fieldset>
+        </div>
+      </div>
+
+      <!-- Events -->
+      <div id="panel-events" class="admin-panel" role="tabpanel" hidden>
+        <div class="form-card">
+          <h2 class="form-card__title">Events</h2>
+          <label class="f-label" for="evt-title">Section title</label>
+          <input class="f-input" id="evt-title" type="text" />
+          <label class="f-label" for="evt-lead">Introduction</label>
+          <textarea class="f-input" id="evt-lead" rows="2"></textarea>
+          <div id="events-list"></div>
+          <button type="button" class="btn btn--ghost" id="add-event">+ Add event</button>
+        </div>
+
+        <div class="form-card">
+          <h2 class="form-card__title">FAQ</h2>
+          <label class="f-label" for="faq-title">Section title</label>
+          <input class="f-input" id="faq-title" type="text" />
+          <label class="f-label" for="faq-lead">Introduction</label>
+          <input class="f-input" id="faq-lead" type="text" />
+          <div id="faq-list"></div>
+          <button type="button" class="btn btn--ghost" id="add-faq">+ Add question</button>
+        </div>
+      </div>
+
+      <!-- Contact -->
+      <div id="panel-contact" class="admin-panel" role="tabpanel" hidden>
+        <div class="form-card">
+          <h2 class="form-card__title">Contact section</h2>
+          <label class="f-label" for="co-title">Title</label>
+          <input class="f-input" id="co-title" type="text" />
+          <label class="f-label" for="co-sub">Subheading</label>
+          <input class="f-input" id="co-sub" type="text" />
+          <label class="f-label" for="co-lead">Lead text</label>
+          <textarea class="f-input" id="co-lead" rows="3"></textarea>
+          <label class="f-label" for="co-reassurance">Reassurance line (e.g. reply time)</label>
+          <input class="f-input" id="co-reassurance" type="text" />
+
+          <label class="f-label" for="co-email">Email</label>
+          <input class="f-input" id="co-email" type="email" autocomplete="email" />
+
+          <div class="f-row2">
+            <div>
+              <label class="f-label" for="co-insta-url">Instagram URL</label>
+              <input class="f-input" id="co-insta-url" type="url" />
+            </div>
+            <div>
+              <label class="f-label" for="co-insta-label">Instagram label</label>
+              <input class="f-input" id="co-insta-label" type="text" />
+            </div>
+          </div>
+
+          <label class="f-label" for="co-wa">WhatsApp number (digits only, with country code)</label>
+          <input class="f-input" id="co-wa" type="text" inputmode="numeric" placeholder="447700900123" />
+
+          <h3 class="form-card__subtitle">Form labels</h3>
+          <label class="f-label" for="co-f-name">Name field label</label>
+          <input class="f-input" id="co-f-name" type="text" />
+          <label class="f-label" for="co-f-msg">Message field label</label>
+          <input class="f-input" id="co-f-msg" type="text" />
+          <label class="f-label" for="co-f-consent">Consent checkbox text</label>
+          <textarea class="f-input" id="co-f-consent" rows="2"></textarea>
+          <label class="f-label" for="co-f-submit">Send button text</label>
+          <input class="f-input" id="co-f-submit" type="text" />
+        </div>
+
+        <div class="form-card">
+          <h2 class="form-card__title">Footer &amp; floating button</h2>
+          <label class="f-label" for="foot-tag">Footer line</label>
+          <textarea class="f-input" id="foot-tag" rows="2"></textarea>
+          <label class="f-label" for="fab-label">Floating action button (mobile)</label>
+          <input class="f-input" id="fab-label" type="text" />
+        </div>
+
+        <div class="form-card">
+          <h2 class="form-card__title">Top offer banner (optional)</h2>
+          <label class="f-check">
+            <input id="ban-on" type="checkbox" />
+            Show banner on the site
+          </label>
+          <label class="f-label" for="ban-text">Banner message</label>
+          <input class="f-input" id="ban-text" type="text" />
+          <label class="f-label" for="ban-href">Link (use #contact for the form)</label>
+          <input class="f-input" id="ban-href" type="text" placeholder="#contact" />
+          <label class="f-label" for="ban-label">Button text</label>
+          <input class="f-input" id="ban-label" type="text" />
+        </div>
+      </div>
+
+      <!-- SEO -->
+      <div id="panel-search" class="admin-panel" role="tabpanel" hidden>
+        <div class="form-card">
+          <h2 class="form-card__title">How your site appears in Google &amp; social shares</h2>
+          <p class="form-hint">If unsure, keep the defaults from your file — or ask whoever helps you with SEO.</p>
+          <label class="f-label" for="meta-title">Page title (browser tab)</label>
+          <input class="f-input" id="meta-title" type="text" />
+          <label class="f-label" for="meta-description">Short description (search results)</label>
+          <textarea class="f-input" id="meta-description" rows="2"></textarea>
+          <label class="f-label" for="meta-canonical">Canonical URL</label>
+          <input class="f-input" id="meta-canonical" type="url" />
+
+          <h3 class="form-card__subtitle">When people share a link</h3>
+          <label class="f-label" for="meta-og-title">Share title</label>
+          <input class="f-input" id="meta-og-title" type="text" />
+          <label class="f-label" for="meta-og-desc">Share description</label>
+          <textarea class="f-input" id="meta-og-desc" rows="2"></textarea>
+          <label class="f-label" for="meta-og-image">Share image URL</label>
+          <input class="f-input" id="meta-og-image" type="text" />
+          <label class="f-label" for="meta-twitter">Twitter / X description (optional)</label>
+          <textarea class="f-input" id="meta-twitter" rows="2"></textarea>
+          <label class="f-label" for="meta-schema">Structured description (for search engines)</label>
+          <textarea class="f-input" id="meta-schema" rows="3"></textarea>
+        </div>
+      </div>
+
+      <!-- JSON -->
+      <div id="panel-json" class="admin-panel" role="tabpanel" hidden>
+        <div class="form-card">
+          <h2 class="form-card__title">Raw data (advanced)</h2>
+          <p class="form-hint">
+            This is the same content as the forms, in technical format. When you open this tab, it refreshes from
+            your current form entries. After editing here, click <strong>Apply JSON to form</strong>, then save.
+          </p>
+          <textarea id="json-editor" class="f-input f-input--mono" spellcheck="false" aria-label="Site JSON" rows="24"></textarea>
+          <div class="toolbar toolbar--panel">
+            <button type="button" class="btn" id="btn-apply-json">Apply JSON to form</button>
+          </div>
+        </div>
       </div>
     </div>
 
     <script src="assets/js/data-store.js"></script>
+    <script src="assets/js/admin-app.js"></script>
     <script>
       (function () {
         "use strict";
@@ -74,53 +521,46 @@
         var importInput = document.getElementById("import-file");
 
         function showStatus(msg, ok) {
+          if (window.OracleAdmin && OracleAdmin.showStatus) {
+            OracleAdmin.showStatus(msg, ok);
+            return;
+          }
           statusEl.textContent = msg;
           statusEl.className = "status " + (ok ? "status--ok" : "status--err");
           statusEl.hidden = false;
         }
 
-        function loadEditor() {
-          return OracleDataStore.fetchDefault()
-            .then(function (base) {
-              var stored = OracleDataStore.getFromStorage();
-              var merged = stored
-                ? deepMerge(JSON.parse(JSON.stringify(base)), stored)
-                : base;
-              ta.value = JSON.stringify(merged, null, 2);
+        function syncTextareaFromForm() {
+          try {
+            var data = OracleAdmin.collectFromForm();
+            ta.value = JSON.stringify(data, null, 2);
+          } catch (e) {
+            showStatus("Could not build JSON: " + e.message, false);
+          }
+        }
+
+        function initEditor() {
+          return OracleAdmin.loadMerged()
+            .then(function () {
+              OracleAdmin.applyToForm();
+              OracleAdmin.bindTabs();
+              OracleAdmin.bindDynamicButtons();
+              syncTextareaFromForm();
             })
             .catch(function () {
-              ta.value = "{}";
               showStatus("Could not load site.json. Check path assets/data/site.json", false);
             });
         }
 
-        function deepMerge(t, s) {
-          if (!s || typeof s !== "object") return t;
-          Object.keys(s).forEach(function (k) {
-            var sv = s[k];
-            if (
-              sv &&
-              typeof sv === "object" &&
-              !Array.isArray(sv) &&
-              t[k] &&
-              typeof t[k] === "object" &&
-              !Array.isArray(t[k])
-            ) {
-              deepMerge(t[k], sv);
-            } else {
-              t[k] = sv;
-            }
-          });
-          return t;
-        }
-
         function saveBrowser() {
           try {
-            var data = JSON.parse(ta.value);
+            var data = OracleAdmin.collectFromForm();
             OracleDataStore.saveToStorage(data);
-            showStatus("Saved to this browser. Open index.html to preview.", true);
+            OracleAdmin.setState(data);
+            syncTextareaFromForm();
+            showStatus("Saved to this browser. Open the public site to preview.", true);
           } catch (e) {
-            showStatus("Invalid JSON: " + e.message, false);
+            showStatus("Save failed: " + e.message, false);
           }
         }
 
@@ -128,7 +568,7 @@
           gate.hidden = true;
           app.hidden = false;
           sessionStorage.setItem(SESSION_KEY, "1");
-          loadEditor();
+          initEditor();
         }
 
         document.getElementById("gate-submit").addEventListener("click", function () {
@@ -143,8 +583,8 @@
         });
 
         document.getElementById("btn-reload").addEventListener("click", function () {
-          loadEditor().then(function () {
-            showStatus("Reloaded from site.json (merged with browser draft if any).", true);
+          initEditor().then(function () {
+            showStatus("Reloaded from file (merged with browser draft if you had one).", true);
           });
         });
 
@@ -152,13 +592,14 @@
 
         document.getElementById("btn-clear-browser").addEventListener("click", function () {
           OracleDataStore.clearStorage();
-          loadEditor();
-          showStatus("Browser override cleared. Reload pulls file only.", true);
+          initEditor().then(function () {
+            showStatus("Browser draft cleared. Showing file data only.", true);
+          });
         });
 
         document.getElementById("btn-download").addEventListener("click", function () {
           try {
-            var data = JSON.parse(ta.value);
+            var data = OracleAdmin.collectFromForm();
             var blob = new Blob([JSON.stringify(data, null, 2)], {
               type: "application/json",
             });
@@ -167,9 +608,9 @@
             a.download = "site.json";
             a.click();
             URL.revokeObjectURL(a.href);
-            showStatus("Download started.", true);
+            showStatus("Download started. Replace assets/data/site.json in your project.", true);
           } catch (e) {
-            showStatus("Invalid JSON: " + e.message, false);
+            showStatus("Download failed: " + e.message, false);
           }
         });
 
@@ -183,15 +624,36 @@
           var reader = new FileReader();
           reader.onload = function () {
             try {
-              JSON.parse(reader.result);
-              ta.value = reader.result;
-              showStatus("Imported. Review and Save to browser or Download.", true);
+              var data = JSON.parse(reader.result);
+              OracleAdmin.setState(data);
+              OracleAdmin.applyToForm();
+              syncTextareaFromForm();
+              showStatus("Imported. Review the forms, then Save to browser or Download.", true);
             } catch (e) {
               showStatus("Invalid file: " + e.message, false);
             }
             importInput.value = "";
           };
           reader.readAsText(f);
+        });
+
+        document.getElementById("btn-apply-json").addEventListener("click", function () {
+          try {
+            var data = JSON.parse(ta.value);
+            OracleAdmin.setState(data);
+            OracleAdmin.applyToForm();
+            showStatus("Form fields updated from JSON.", true);
+          } catch (e) {
+            showStatus("Invalid JSON: " + e.message, false);
+          }
+        });
+
+        document.querySelectorAll(".admin-tab").forEach(function (tab) {
+          tab.addEventListener("click", function () {
+            if (tab.getAttribute("data-tab") === "json") {
+              syncTextareaFromForm();
+            }
+          });
         });
 
         document.getElementById("btn-logout").addEventListener("click", function () {
@@ -204,7 +666,7 @@
         if (sessionStorage.getItem(SESSION_KEY) === "1") {
           gate.hidden = true;
           app.hidden = false;
-          loadEditor();
+          initEditor();
         }
       })();
     </script>
