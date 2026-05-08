@@ -1,0 +1,13 @@
+{
+  "name": "oracle-of-freedom-site",
+  "private": true,
+  "description": "Static site — Agota Urbikaite / Oracle of Freedom",
+  "scripts": {
+    "dev": "serve -l 5173 .",
+    "start": "serve -l 5173 .",
+    "github": "bash scripts/github-wizard.sh"
+  },
+  "devDependencies": {
+    "serve": "^14.2.4"
+  }
+}

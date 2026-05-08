@@ -1,0 +1,236 @@
+{
+  "meta": {
+    "title": "Agota Urbikaite — Festivals, Events, Parties & Retreats | Oracle of Freedom",
+    "description": "Photography and videography for special experiences: festivals, live events, celebrations, retreats and community gatherings. Candid, cinematic work. Agota Urbikaite, Oracle of Freedom.",
+    "canonical": "https://oracleoffreedom.com/",
+    "ogTitle": "Agota Urbikaite — Oracle of Freedom | Special moments, beautifully captured",
+    "ogDescription": "Photo and video for festivals, parties, retreats and one-off gatherings—so the feeling of the day lives on.",
+    "ogLocale": "en_GB",
+    "ogImage": "https://oracleoffreedom.com/assets/img/og-default.jpg",
+    "twitterDescription": "Cinematic photo and video for festivals, events, parties, retreats and gatherings.",
+    "schemaDescription": "Professional photography and videography for festivals, live events, parties, retreats, community gatherings, portraits and music videos. Candid, cinematic storytelling."
+  },
+  "brand": {
+    "name": "Agota Urbikaite",
+    "tagline": "Oracle of Freedom"
+  },
+  "hero": {
+    "headline": "Cinematic photo & film for festivals, events, parties & retreats",
+    "headlineShort": "Photo & film for gatherings people never forget",
+    "role": "Photographer & Videographer",
+    "year": "2026",
+    "instagramUrl": "https://instagram.com/oracle.of.freedom",
+    "instagramHandle": "@oracle.of.freedom",
+    "quote": "I document special gatherings—the energy on the dancefloor, the hush of a retreat, the spark of a celebration—so everyone who was there can feel it again, and everyone who wasn’t wishes they had been.",
+    "ctaPrimary": "Request a quote",
+    "ctaSecondary": "View portfolio",
+    "heroImage": ""
+  },
+  "proofLabels": ["Festivals", "Events", "Parties", "Retreats"],
+  "valueStrip": {
+    "items": [
+      {
+        "title": "One conversation",
+        "text": "Tell me what you’re planning—I shape a clear offer. No preset boxes."
+      },
+      {
+        "title": "Felt, not staged",
+        "text": "Candid energy and quiet moments—so your people recognise the real day."
+      },
+      {
+        "title": "Fast next step",
+        "text": "You’ll know what happens after you write—no guesswork."
+      }
+    ]
+  },
+  "services": {
+    "title": "Services",
+    "lead": "Coverage and editing for organisers and hosts who throw unforgettable experiences—multi-day festivals, one-night parties, intimate retreats, community rituals and everything in between. Less posing, more what it actually felt like.",
+    "items": [
+      {
+        "title": "Photography",
+        "body": "Dancefloors, ceremonies, fire circles and quiet golden-hour portraits—candid reportage with an editorial eye, ready to share with your guests and promote your next edition."
+      },
+      {
+        "title": "Videography",
+        "body": "Highlights, aftermovies, vertical cuts and slow, human moments—edits with a cinematic pace so the atmosphere travels beyond the venue."
+      }
+    ]
+  },
+  "approach": {
+    "title": "Tailored to you",
+    "lead": "I don’t sell one-size-fits-all bundles. Every festival, party and retreat has its own heartbeat—so we start as humans: you share what matters to you, your crowd and your vision, and we shape a single, clear offer around that conversation.",
+    "body": "Whether you need stills, film, both, or something in between, we align on your priorities—timeline, energy on site, deliverables, how you want people to feel when they see the work—and I put that in writing before anything is confirmed. No rigid tiers: just an honest fit between what you need and what I can create for you.",
+    "listTitle": "What we’ll shape together",
+    "bullets": [
+      "The story you want told (and what can stay private)",
+      "Schedule, locations and the flow of the day or weekend",
+      "Photo, video or both—and the formats that serve you best",
+      "How and when you’d like to receive the work",
+      "Any practical must-haves: access, safety, partners, languages"
+    ],
+    "note": "When it feels right, you’ll get a straightforward proposal you can say yes to—then we focus on being present for the real moments, not on fitting your gathering into a preset box.",
+    "ctaPrimary": "Start a conversation",
+    "ctaSecondary": "See how it flows"
+  },
+  "process": {
+    "title": "Process",
+    "lead": "Four steps—clear and calm. You always know what comes next.",
+    "steps": [
+      {
+        "title": "Discovery",
+        "body": "Brief, references, who’s coming and what you want people to feel (and remember) afterwards."
+      },
+      {
+        "title": "Proposal",
+        "body": "A written proposal: scope, timeline, usage rights and investment—so you can decide with clarity."
+      },
+      {
+        "title": "Production",
+        "body": "On-site coverage with a candid approach and crew safety in mind."
+      },
+      {
+        "title": "Delivery",
+        "body": "Editing, agreed revisions and files ready to share with guests and your team."
+      }
+    ]
+  },
+  "testimonials": {
+    "title": "Kind words",
+    "lead": "From organisers and hosts I’ve worked with.",
+    "items": [
+      {
+        "quote": "She caught the festival’s energy without losing the emotional detail—our community finally saw on screen what they felt on site.",
+        "cite": "Festival organiser"
+      },
+      {
+        "quote": "You can tell she’s inside the moment, not beside it. The aftermovie had people booking before we announced the next gathering.",
+        "cite": "Independent promoter"
+      }
+    ]
+  },
+  "about": {
+    "title": "About me",
+    "body": "I have been working with photography and video for over 10 years both professionally and in passion projects. I specialise in capturing pure candid moments and bringing the magic of an event or community to life in both still images and video edits. My style is fluid and organic, it is a delicate balance between opposing energies of action and calm - not just capturing the moment, but being in it; not just around the action but part of it. It’s what gives my work depth and where the sweetest most genuine moments are captured, where the viewer becomes part of it all.",
+    "chips": [
+      "Festivals",
+      "Live events",
+      "Parties",
+      "Retreats",
+      "DJs & dancefloors",
+      "Gatherings",
+      "Fire & performance",
+      "Concerts",
+      "Portraits",
+      "Music videos"
+    ],
+    "image": "",
+    "imageCaption": "Add your portrait path in Admin → Images (e.g. assets/img/about.jpg)."
+  },
+  "portfolio": {
+    "title": "Portfolio",
+    "lead": "A glimpse of recent work. Drop your best frames in Admin → Portfolio images.",
+    "images": []
+  },
+  "videography": {
+    "title": "Videography",
+    "lead": "Vertical cuts from the floor. Paste YouTube or Vimeo links in Admin → Videos."
+  },
+  "musicVideos": {
+    "title": "Music videos",
+    "lead": "A featured piece—full edit, full feeling."
+  },
+  "videos": [
+    {
+      "id": "v1",
+      "title": "Videography — piece 1",
+      "url": "",
+      "poster": ""
+    },
+    {
+      "id": "v2",
+      "title": "Videography — piece 2",
+      "url": "",
+      "poster": ""
+    },
+    {
+      "id": "v3",
+      "title": "Videography — piece 3",
+      "url": "",
+      "poster": ""
+    },
+    {
+      "id": "v4",
+      "title": "Videography — piece 4",
+      "url": "",
+      "poster": ""
+    },
+    {
+      "id": "mv1",
+      "title": "Music video — featured",
+      "url": "",
+      "poster": ""
+    }
+  ],
+  "faq": {
+    "title": "FAQ",
+    "lead": "Short answers—tap to open.",
+    "items": [
+      {
+        "q": "How is the final price set?",
+        "a": "After we talk through your plans, I put together a custom quote based on duration, travel, what you need delivered, timelines and usage rights. Everything is confirmed in writing before we hold the date."
+      },
+      {
+        "q": "How long does delivery take?",
+        "a": "Highlights typically 7–14 days depending on season; full galleries depend on volume. We align expectations in the proposal."
+      },
+      {
+        "q": "How many revisions are included?",
+        "a": "We agree on rounds of feedback when we define your proposal—so it matches the size of the job, not a generic tier. Larger changes outside that scope can always be discussed separately."
+      },
+      {
+        "q": "Do you work outside your city or country?",
+        "a": "Yes. Travel and accommodation are added when needed. Priority for multi-date blocks."
+      }
+    ]
+  },
+  "events": {
+    "title": "Where I’ll be",
+    "lead": "Upcoming festivals, residencies and collaborations.",
+    "items": [
+      {
+        "title": "Your event name",
+        "date": "Dates TBC",
+        "location": "Place",
+        "role": "Photo & video",
+        "url": ""
+      }
+    ]
+  },
+  "offerBanner": {
+    "enabled": false,
+    "text": "Limited summer dates — ask about availability",
+    "href": "#contact",
+    "label": "Check dates"
+  },
+  "contact": {
+    "title": "Get in touch",
+    "subhead": "Let’s talk about your next gathering",
+    "lead": "Send dates, location and what you’re planning—festival, party, retreat or something in between. I’ll reply with availability and next steps.",
+    "reassurance": "Usually within 48 hours · No obligation",
+    "email": "agota@oracleoffreedom.com",
+    "instagramUrl": "https://instagram.com/oracle.of.freedom",
+    "instagramLabel": "@oracle.of.freedom",
+    "whatsappE164": "",
+    "form": {
+      "nameLabel": "Name & event / gathering",
+      "messageLabel": "Tell me about your plans",
+      "consentLabel": "I agree to my details being used to respond to this enquiry.",
+      "submitLabel": "Send message"
+    }
+  },
+  "footer": {
+    "tagline": "Agota Urbikaite — photography and videography for festivals, parties, retreats and special gatherings."
+  },
+  "fabLabel": "Request a quote"
+}

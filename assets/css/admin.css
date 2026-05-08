@@ -1,0 +1,164 @@
+/* Admin portal — Oracle of Freedom */
+:root {
+  --adm-bg: #0f0f12;
+  --adm-panel: #16161c;
+  --adm-border: rgba(245, 245, 244, 0.1);
+  --adm-text: #f5f5f4;
+  --adm-muted: #a1a1aa;
+  --adm-accent: #c9a46a;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  background: var(--adm-bg);
+  color: var(--adm-text);
+  line-height: 1.5;
+  min-height: 100vh;
+}
+
+.admin {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 1.5rem;
+}
+
+.admin h1 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0 0 0.5rem;
+}
+
+.admin__sub {
+  color: var(--adm-muted);
+  font-size: 0.9rem;
+  margin: 0 0 1.5rem;
+}
+
+.gate {
+  max-width: 400px;
+  margin: 4rem auto;
+  padding: 2rem;
+  background: var(--adm-panel);
+  border: 1px solid var(--adm-border);
+  border-radius: 12px;
+}
+
+.gate label {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--adm-muted);
+  margin-bottom: 0.35rem;
+}
+
+.gate input {
+  width: 100%;
+  padding: 0.65rem 0.75rem;
+  border-radius: 8px;
+  border: 1px solid var(--adm-border);
+  background: #0a0a0f;
+  color: var(--adm-text);
+  margin-bottom: 1rem;
+}
+
+.gate__err {
+  color: #f87171;
+  font-size: 0.85rem;
+  margin: 0 0 1rem;
+  min-height: 1.25rem;
+}
+
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.55rem 1rem;
+  border-radius: 8px;
+  border: 1px solid var(--adm-border);
+  background: var(--adm-panel);
+  color: var(--adm-text);
+  font-size: 0.875rem;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.btn:hover {
+  border-color: var(--adm-accent);
+  color: var(--adm-accent);
+}
+
+.btn--primary {
+  background: linear-gradient(135deg, var(--adm-accent), #a88454);
+  color: var(--adm-bg);
+  border: none;
+  font-weight: 600;
+}
+
+.btn--primary:hover {
+  filter: brightness(1.05);
+  color: var(--adm-bg);
+}
+
+.status {
+  padding: 0.65rem 0.85rem;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  margin-bottom: 1rem;
+}
+
+.status--ok {
+  background: rgba(93, 169, 233, 0.12);
+  border: 1px solid rgba(93, 169, 233, 0.35);
+}
+
+.status--err {
+  background: rgba(248, 113, 113, 0.12);
+  border: 1px solid rgba(248, 113, 113, 0.35);
+}
+
+#json-editor {
+  width: 100%;
+  min-height: 70vh;
+  padding: 1rem;
+  font-family: ui-monospace, "Cascadia Code", monospace;
+  font-size: 0.8rem;
+  line-height: 1.45;
+  border-radius: 8px;
+  border: 1px solid var(--adm-border);
+  background: #0a0a0f;
+  color: var(--adm-text);
+  resize: vertical;
+}
+
+.admin__help {
+  font-size: 0.8rem;
+  color: var(--adm-muted);
+  margin-top: 1rem;
+}
+
+.admin__help code {
+  color: var(--adm-accent);
+}
+
+.admin__help ul {
+  padding-left: 1.2rem;
+}
+
+@media (max-width: 640px) {
+  #json-editor {
+    min-height: 50vh;
+  }
+}

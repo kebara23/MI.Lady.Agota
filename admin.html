@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Admin — Oracle of Freedom</title>
+    <meta name="robots" content="noindex,nofollow" />
+    <link rel="stylesheet" href="assets/css/admin.css" />
+  </head>
+  <body>
+    <!-- Set ORACLE_ADMIN_PIN in the script below before going live. -->
+    <div id="gate" class="gate">
+      <h1 style="margin-top: 0">Admin</h1>
+      <p class="admin__sub">Enter PIN to edit site content.</p>
+      <label for="pin-input">PIN</label>
+      <input id="pin-input" type="password" autocomplete="current-password" />
+      <p id="gate-err" class="gate__err" role="alert"></p>
+      <button type="button" class="btn btn--primary" id="gate-submit" style="width: 100%">
+        Unlock
+      </button>
+    </div>
+
+    <div id="app" class="admin" hidden>
+      <h1>Site editor</h1>
+      <p class="admin__sub">
+        Edit <code>assets/data/site.json</code> structure below. Save to this browser for instant
+        preview, or download the file and replace it in your project for production.
+      </p>
+      <div id="status" class="status" hidden role="status"></div>
+      <div class="toolbar">
+        <button type="button" class="btn" id="btn-reload">Reload from file</button>
+        <button type="button" class="btn btn--primary" id="btn-save-browser">Save to browser</button>
+        <button type="button" class="btn" id="btn-clear-browser">Clear browser data</button>
+        <button type="button" class="btn" id="btn-download">Download site.json</button>
+        <button type="button" class="btn" id="btn-import">Import JSON file…</button>
+        <a class="btn" href="index.html" target="_blank" rel="noopener">Open public site</a>
+        <button type="button" class="btn" id="btn-logout">Lock</button>
+      </div>
+      <input type="file" id="import-file" accept=".json,application/json" hidden />
+      <textarea id="json-editor" spellcheck="false" aria-label="Site JSON"></textarea>
+      <div class="admin__help">
+        <p><strong>Key sections</strong></p>
+        <ul>
+          <li><code>hero</code> — headline, quote, CTA labels, <code>heroImage</code> path</li>
+          <li><code>valueStrip.items</code> — 3 short blocks (low cognitive load)</li>
+          <li><code>services.items</code>, <code>approach</code>, <code>process.steps</code></li>
+          <li><code>testimonials.items</code> — reviews (quote + cite)</li>
+          <li><code>events.items</code> — title, date, location, role, optional <code>url</code></li>
+          <li><code>portfolio.images</code> — array of image paths/URLs</li>
+          <li><code>videos</code> — <code>v1</code>…<code>v4</code>, <code>mv1</code> with <code>url</code> &amp; <code>poster</code></li>
+          <li><code>faq.items</code>, <code>contact</code>, <code>offerBanner.enabled</code></li>
+          <li><code>meta</code> — SEO title &amp; descriptions</li>
+        </ul>
+        <p>
+          <strong>Production:</strong> after Download, save as
+          <code>assets/data/site.json</code> in your project and deploy.
+        </p>
+      </div>
+    </div>
+
+    <script src="assets/js/data-store.js"></script>
+    <script>
+      (function () {
+        "use strict";
+
+        /** CHANGE THIS before sharing the admin URL */
+        var ORACLE_ADMIN_PIN = "oracle";
+
+        var SESSION_KEY = "oracle-admin-session";
+        var gate = document.getElementById("gate");
+        var app = document.getElementById("app");
+        var ta = document.getElementById("json-editor");
+        var statusEl = document.getElementById("status");
+        var importInput = document.getElementById("import-file");
+
+        function showStatus(msg, ok) {
+          statusEl.textContent = msg;
+          statusEl.className = "status " + (ok ? "status--ok" : "status--err");
+          statusEl.hidden = false;
+        }
+
+        function loadEditor() {
+          return OracleDataStore.fetchDefault()
+            .then(function (base) {
+              var stored = OracleDataStore.getFromStorage();
+              var merged = stored
+                ? deepMerge(JSON.parse(JSON.stringify(base)), stored)
+                : base;
+              ta.value = JSON.stringify(merged, null, 2);
+            })
+            .catch(function () {
+              ta.value = "{}";
+              showStatus("Could not load site.json. Check path assets/data/site.json", false);
+            });
+        }
+
+        function deepMerge(t, s) {
+          if (!s || typeof s !== "object") return t;
+          Object.keys(s).forEach(function (k) {
+            var sv = s[k];
+            if (
+              sv &&
+              typeof sv === "object" &&
+              !Array.isArray(sv) &&
+              t[k] &&
+              typeof t[k] === "object" &&
+              !Array.isArray(t[k])
+            ) {
+              deepMerge(t[k], sv);
+            } else {
+              t[k] = sv;
+            }
+          });
+          return t;
+        }
+
+        function saveBrowser() {
+          try {
+            var data = JSON.parse(ta.value);
+            OracleDataStore.saveToStorage(data);
+            showStatus("Saved to this browser. Open index.html to preview.", true);
+          } catch (e) {
+            showStatus("Invalid JSON: " + e.message, false);
+          }
+        }
+
+        function openApp() {
+          gate.hidden = true;
+          app.hidden = false;
+          sessionStorage.setItem(SESSION_KEY, "1");
+          loadEditor();
+        }
+
+        document.getElementById("gate-submit").addEventListener("click", function () {
+          var pin = document.getElementById("pin-input").value;
+          var err = document.getElementById("gate-err");
+          if (pin === ORACLE_ADMIN_PIN) {
+            err.textContent = "";
+            openApp();
+          } else {
+            err.textContent = "Incorrect PIN.";
+          }
+        });
+
+        document.getElementById("btn-reload").addEventListener("click", function () {
+          loadEditor().then(function () {
+            showStatus("Reloaded from site.json (merged with browser draft if any).", true);
+          });
+        });
+
+        document.getElementById("btn-save-browser").addEventListener("click", saveBrowser);
+
+        document.getElementById("btn-clear-browser").addEventListener("click", function () {
+          OracleDataStore.clearStorage();
+          loadEditor();
+          showStatus("Browser override cleared. Reload pulls file only.", true);
+        });
+
+        document.getElementById("btn-download").addEventListener("click", function () {
+          try {
+            var data = JSON.parse(ta.value);
+            var blob = new Blob([JSON.stringify(data, null, 2)], {
+              type: "application/json",
+            });
+            var a = document.createElement("a");
+            a.href = URL.createObjectURL(blob);
+            a.download = "site.json";
+            a.click();
+            URL.revokeObjectURL(a.href);
+            showStatus("Download started.", true);
+          } catch (e) {
+            showStatus("Invalid JSON: " + e.message, false);
+          }
+        });
+
+        document.getElementById("btn-import").addEventListener("click", function () {
+          importInput.click();
+        });
+
+        importInput.addEventListener("change", function () {
+          var f = importInput.files && importInput.files[0];
+          if (!f) return;
+          var reader = new FileReader();
+          reader.onload = function () {
+            try {
+              JSON.parse(reader.result);
+              ta.value = reader.result;
+              showStatus("Imported. Review and Save to browser or Download.", true);
+            } catch (e) {
+              showStatus("Invalid file: " + e.message, false);
+            }
+            importInput.value = "";
+          };
+          reader.readAsText(f);
+        });
+
+        document.getElementById("btn-logout").addEventListener("click", function () {
+          sessionStorage.removeItem(SESSION_KEY);
+          app.hidden = true;
+          gate.hidden = false;
+          document.getElementById("pin-input").value = "";
+        });
+
+        if (sessionStorage.getItem(SESSION_KEY) === "1") {
+          gate.hidden = true;
+          app.hidden = false;
+          loadEditor();
+        }
+      })();
+    </script>
+  </body>
+</html>
